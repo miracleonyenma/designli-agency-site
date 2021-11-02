@@ -13,26 +13,16 @@
 </template>
 
 <script>
-  import ProjectCard from '~/components/ProjectCard.vue';
-  export default {
-    components: {
-      ProjectCard
-    },
-    data() {
-      return {
-        projects: []
-      }
-    },
-
-    async mounted() {
-      try {
-        this.projects = await this.$axios.$get(`http://localhost:1337/projects`)
-      } catch (error) {
-        console.log(error);
-      }
+export default {
+  async asyncData({ $strapi }) {
+    try {
+      const projects = await $strapi.$projects.find()
+      return { projects }
+    } catch (error) {
+      console.log(error)
     }
-  }
-
+  },
+}
 </script>
 
 <style></style>

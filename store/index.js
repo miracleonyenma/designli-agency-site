@@ -1,3 +1,1 @@
-export const state = () => ({
-  url: process.env.STRAPI_URL
-})
+export const state = () => ({ url: process.env.STRAPI_URL })

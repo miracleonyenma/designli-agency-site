@@ -83,12 +83,10 @@
           body: this.message
         }
 
-        console.log(data);
-
         try {
-          const visitor_messages = await this.$strapi.create('visitor-messages', data)
-          console.log(visitor_messages);
-          if(visitor_messages) this.success = true
+          const msgs = await this.$strapi.create('visitor-messages', data)
+          console.log(msgs);
+          if(msgs) this.success = true
         } catch (error) {
           console.log(error);
         }
