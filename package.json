@@ -1,0 +1,30 @@
+{
+  "name": "designli",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/markdownit": "^2.0.0",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/strapi": "^0.3.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "core-js": "^3.15.1",
+    "markdown-it-attrs": "^4.1.0",
+    "markdown-it-div": "^1.1.0",
+    "nuxt": "^2.15.7"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^4.2.1",
+    "autoprefixer": "^10.4.0",
+    "eslint-config-prettier": "^8.3.0",
+    "postcss": "^8.3.11",
+    "prettier": "^2.3.2",
+    "tailwindcss": "^2.2.19"
+  }
+}

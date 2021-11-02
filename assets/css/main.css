@@ -1,0 +1,33 @@
+body {
+  @apply bg-gray-50 text-gray-800;
+}
+
+button, label{
+  @apply cursor-pointer;
+}
+
+.site-section {
+  @apply p-4;
+}
+
+@layer components {
+  .hero-text {
+    @apply text-4xl md:text-7xl font-black mb-2;
+  }
+
+  .header-text {
+    @apply text-2xl md:text-5xl font-black mb-2;
+  }
+
+  .hero-section .img-cont {
+    @apply absolute rounded-full overflow-hidden;
+  }
+
+  .img-cont img {
+    @apply w-full h-full object-cover;
+  }
+
+  .cta {
+    @apply bg-gray-700 text-gray-50 py-1 px-3 rounded-md transform hover:scale-105;
+  }
+}
