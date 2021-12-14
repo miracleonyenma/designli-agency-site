@@ -44,6 +44,7 @@ export default {
   // Strapi module configuration
   strapi: {
     // Options
+    url: process.env.STRAPI_URL || 'http://localhost:1337/api',
     entities: ['articles', 'projects', 'project_categories', 'categories', 'visitor_messages'],
   },
 

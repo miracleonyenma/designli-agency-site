@@ -2,7 +2,7 @@
   <li class="article md:grid gap-6 grid-cols-7 items-center mb-6 md:mb-0">
     <div class="img-cont h-full overflow-hidden rounded-xl col-start-1 col-end-3">
       <!-- fetch media from strapi using the STRAPI_URL -->
-      <img :src="$store.state.url + article.cover.formats.medium.url" alt="">
+      <img :src="coverImageUrl" alt="">
     </div>
     <header class=" col-start-3 col-end-8">
       <h1 class="font-bold text-xl mb-2">{{article.title}}</h1>
@@ -19,5 +19,12 @@
 <script>
   export default {
     props: ['article'],
+    computed: {
+      coverImageUrl(){
+        const url = this.$store.state.url
+        const imagePath = this.article.cover.data.attributes.formats.medium.url
+        return url + imagePath
+      }
+    }
   }
 </script>

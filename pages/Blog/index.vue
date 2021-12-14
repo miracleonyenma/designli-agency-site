@@ -7,17 +7,24 @@
       </div>
     </header>
     <ul class="m-auto px-4 max-w-5xl grid gap-8 mb-12">
-      <article-card v-for="article in articles" :key="article.id" :article="article" />
+      <article-card
+        v-for="article in articles"
+        :key="article.id"
+        :article="article.attributes"
+      />
     </ul>
   </main>
 </template>
 
 <script>
 export default {
-  async asyncData({ $strapi }) {
+  async asyncData({ store }) {
     try {
-      const articles = await $strapi.$articles.find()
-      return { articles }
+      const { data } = await (
+        await fetch(`${store.state.apiUrl}/articles?populate=*`)
+      ).json()
+      
+      return { articles: data }
     } catch (error) {
       console.log(error)
     }

@@ -5,7 +5,7 @@
       <p>{{project.intro}}</p>
       <!-- map through the project categories and convert the array to string -->
       <!-- to display categories seperated by commas -->
-      <p class="text-gray-600 text-sm mb-2">{{project.project_categories.map(x=>x["name"]).toString()}}</p>
+      <p class="text-gray-600 text-sm mb-2">{{ projectCategories }}</p>
       <nuxt-link :to="`/projects/${project.slug}`">
         <button class="cta w-max">View Project</button>
       </nuxt-link>
@@ -13,14 +13,26 @@
 
     <div
       class="img-cont rounded-xl h-full max-h-40 md:max-h-72 row-start-1 md:col-start-1 md:col-end-5 overflow-hidden">
-      <img :src="$store.state.url + project.cover.formats.medium.url" alt="">
+      <img v-if="coverImageUrl" :src="coverImageUrl" alt="">
     </div>
   </li>
 </template>
 
 <script>
   export default {
-    props: ['project']
+    props: ['project'],
+    computed: {
+      coverImageUrl(){
+        const url = this.$store.state.url
+        const imagePath = this.project.cover.data.attributes.formats.medium.url
+        return url + imagePath
+      },
+      projectCategories(){
+        return this.project.project_categories.data.map(
+          x=>x.attributes["name"]
+        ).toString()
+      }
+    }
   }
 
 </script>

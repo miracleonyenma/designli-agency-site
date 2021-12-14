@@ -1,6 +1,6 @@
 <template>
   <main>
-    <header class="px-4">
+    <header>
       <div class="wrapper"></div>
       <div class="cover img-cont h-full max-h-72">
         <img class=" rounded-b-2xl" src="~/assets/img/hero.jpg" alt="" />

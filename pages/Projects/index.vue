@@ -7,17 +7,20 @@
       </div>
     </header>
     <ul class="m-auto px-4 max-w-5xl mb-12">
-      <project-card v-for="project in projects" :key="project.id" :project="project" />
+      <project-card v-for="project in projects" :key="project.id" :project="project.attributes" />
     </ul>
   </main>
 </template>
 
 <script>
 export default {
-  async asyncData({ $strapi }) {
+  async asyncData({ store }) {
     try {
-      const projects = await $strapi.$projects.find()
-      return { projects }
+      // const projects = await $strapi.$projects.find()
+      const { data } = await (
+        await fetch(`${store.state.apiUrl}/projects?populate=*`)
+      ).json()
+      return { projects: data }
     } catch (error) {
       console.log(error)
     }

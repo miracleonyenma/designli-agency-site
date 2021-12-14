@@ -1,18 +1,27 @@
 <template>
-<!-- pages/Projects/_slug.vue -->
+  <!-- pages/Projects/_slug.vue -->
   <main>
     <div v-if="project">
-      <header class="px-4">
+      <header>
         <div class="cover img-cont h-full max-h-96">
-          <img v-if="$store.state.url" class="rounded-b-2xl" :src="$store.state.url + project.cover.formats.large.url" alt="" />
+          <img
+            v-if="coverImageUrl"
+            class="rounded-b-2xl"
+            :src="coverImageUrl"
+            alt=""
+          />
         </div>
       </header>
-      <div class="cont relative bg-gray-50 p-12 z-10 m-auto max-w-6xl rounded-2xl">
+      <div
+        class="cont relative bg-gray-50 p-12 z-10 m-auto max-w-6xl rounded-2xl"
+      >
         <article class="prose prose-xl m-auto w-full">
-          <p class="text-gray-600 text-sm mb-2">{{project.project_categories.map(x=>x["name"]).toString()}}</p>
+          <p class="text-gray-600 text-sm mb-2">
+            {{ projectCategories }}
+          </p>
           <h1 class="hero-text">{{ project.title }}</h1>
           <p>{{ project.intro }}</p>
-          
+
           <!-- use markdownit to render the markdown text to html -->
           <div v-html="$md.render(project.body)" class="body"></div>
         </article>
@@ -28,17 +37,35 @@
 </template>
 
 <script>
-  export default {
-    // use destructuring to get the context.params and context.$strapi
-    async asyncData({ params, $strapi }) {
-      try {
-        // use destructuring to get the first item of the returned array
-        // fetch the data from Strapi using params.slug as slug for our parameter
-        const [project] = await $strapi.$projects.find({slug: params.slug})
-        return { project }
-      } catch (error) {
-        console.log(error)
-      }
+export default {
+  // use destructuring to get the context.params and context.store
+  async asyncData({ params, store }) {
+    try {
+
+      // fetch data by slug using Strapi query filters
+      const { data } = await (
+        await fetch(
+          `${store.state.apiUrl}/projects?filters[slug][$eq]=${params.slug}&populate=*`
+        )
+      ).json()
+
+      return { project: data[0].attributes }
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
+  computed: {
+    coverImageUrl() {
+      const url = this.$store.state.url
+      const imagePath = this.project.cover.data.attributes.formats.medium.url
+      return url + imagePath
+    },
+    projectCategories() {
+      return this.project.project_categories.data
+        .map((x) => x.attributes['name'])
+        .toString()
+    },
   },
 }
 </script>

@@ -18,10 +18,10 @@
               <label for="name">Full name</label>
               <input type="text" id="name" v-model="name" value="Miracleio"  required/>
             </div>
-            <div class="form-control">
+            <!-- <div class="form-control">
               <label for="company">Company name</label>
               <input type="text" id="company" v-model="company" value="Miracleio"  required/>
-            </div>
+            </div> -->
           </div>
           <div class="form-control">
             <label for="email">Email Address</label>
@@ -67,7 +67,7 @@
       return{
         success: false,
         name: 'Miracle',
-        company: 'Miracleio',
+        // company: 'Miracleio',
         email: 'mio@mio.co',
         services: ['branding'],
         message: 'What\'s up yo?'
@@ -77,15 +77,22 @@
       async submitForm(){
         const data = {
           name: this.name,
-          company: this.company,
+          // company: this.company,
           email: this.email,
           project_categories: this.services,
           body: this.message
         }
 
         try {
-          const msgs = await this.$strapi.create('visitor-messages', data)
-          console.log(msgs);
+          // send a POST request to create a new entry
+          const msgs = await fetch(`${this.$store.state.apiUrl}/visior-messages`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data})
+          })
+
           if(msgs) this.success = true
         } catch (error) {
           console.log(error);
